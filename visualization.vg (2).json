@@ -16,7 +16,7 @@
         {"type": "filter", "expr": "datum.Density > 0"},
         {"type": "filter", "expr": "datum.GrowthRate > 0.98"},
         {"type": "filter", "expr": "1.06>datum.GrowthRate"},
-        {"type": "filter", "expr": "datum.Population > Population_Above"},
+        {"type": "filter", "expr": "datum.Density > Density"},
         {
           "type": "filter",
           "expr": "Continent_selection == null || datum.Continent == Continent_selection"
@@ -46,14 +46,14 @@
   ],
   "signals": [
     {
-      "name": "Population_Above",
+      "name": "Density",
       "value": 0,
       "bind": {
         "input": "range",
         "min": 0,
-        "max": 1500000000,
-        "step": 1000000,
-        "name": "Minimum Population: "
+        "max": 1500,
+        "step": 100,
+        "name": "Minimum Density: "
       }
     },
     {
