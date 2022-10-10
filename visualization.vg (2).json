@@ -1,0 +1,256 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "background": "white",
+  "padding": 5,
+  "width": 1000,
+  "height": 800,
+  "title": {"text": "World Population And Growth Rate", "frame": "group"},
+  "style": "cell",
+  "data": [
+    {
+      "name": "source_0",
+      "url": "https://raw.githubusercontent.com/FR0614/FIT3179/main/world_population%20-%20world_population%20(2).csv",
+      "format": {"type": "csv", "delimiter": ","},
+      "transform": [
+        {"type": "filter", "expr": "datum.Population > 0"},
+        {"type": "filter", "expr": "datum.Density > 0"},
+        {"type": "filter", "expr": "datum.GrowthRate > 0.98"},
+        {"type": "filter", "expr": "1.06>datum.GrowthRate"},
+        {"type": "filter", "expr": "datum.Population > Population_Above"},
+        {
+          "type": "filter",
+          "expr": "Continent_selection == null || datum.Continent == Continent_selection"
+        }
+      ]
+    },
+    {
+      "name": "data_0",
+      "source": "source_0",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"Population\"]) && isFinite(+datum[\"Population\"]) && isValid(datum[\"GrowthRate\"]) && isFinite(+datum[\"GrowthRate\"]) && isValid(datum[\"Density\"]) && isFinite(+datum[\"Density\"])"
+        }
+      ]
+    },
+    {
+      "name": "data_1",
+      "source": "source_0",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"Population\"]) && isFinite(+datum[\"Population\"]) && isValid(datum[\"GrowthRate\"]) && isFinite(+datum[\"GrowthRate\"])"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "name": "Population_Above",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 0,
+        "max": 1500000000,
+        "step": 1000000,
+        "name": "Minimum Population: "
+      }
+    },
+    {
+      "name": "Continent_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"
+        ],
+        "labels": [
+          "Show All",
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"
+        ],
+        "name": "Continent Selection: "
+      }
+    }
+  ],
+  "marks": [
+    {
+      "name": "layer_0_marks",
+      "type": "symbol",
+      "style": ["circle"],
+      "from": {"data": "data_0"},
+      "encode": {
+        "update": {
+          "opacity": {"value": 0.6},
+          "fill": {"scale": "color", "field": "Continent"},
+          "ariaRoleDescription": {"value": "circle"},
+          "description": {
+            "signal": "\"Population: \" + (format(datum[\"Population\"], \"\")) + \"; Growth Rate: \" + (format(datum[\"GrowthRate\"], \"\")) + \"; Continent: \" + (isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"]) + \"; Density: \" + (format(datum[\"Density\"], \".1s\"))"
+          },
+          "x": {"scale": "x", "field": "Population"},
+          "y": {"scale": "y", "field": "GrowthRate"},
+          "size": {"scale": "size", "field": "Density"},
+          "shape": {"value": "circle"}
+        }
+      }
+    },
+    {
+      "name": "layer_1_marks",
+      "type": "text",
+      "style": ["text"],
+      "from": {"data": "data_1"},
+      "encode": {
+        "update": {
+          "align": {"value": "right"},
+          "baseline": {"value": "middle"},
+          "dx": {"value": -12},
+          "fontSize": {"value": 12},
+          "fontStyle": {"value": "italic"},
+          "fill": {"value": "black"},
+          "opacity": [
+            {
+              "test": "datum['Country'] == 'China' || datum['Country'] =='India' || datum['Country'] == 'Australia' || datum['Country'] =='New Zealand' || datum['Country'] =='Monaco' ||  datum['Country'] == 'United States'|| datum['Country'] =='Lebanon'|| datum['Country'] =='Vatican City'|| datum['Country'] =='Poland' || datum['Country'] =='Russia'   ",
+              "value": 1
+            },
+            {"value": 0}
+          ],
+          "tooltip": {
+            "signal": "{\"Continent\": isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"], \"Country\": isValid(datum[\"Country\"]) ? datum[\"Country\"] : \"\"+datum[\"Country\"], \"Capital\": isValid(datum[\"Capital\"]) ? datum[\"Capital\"] : \"\"+datum[\"Capital\"], \"Population\": format(datum[\"Population\"], \",\"), \"GrowthRate\": format(datum[\"GrowthRate\"], \",\"), \"Density\": format(datum[\"Density\"], \",\")}"
+          },
+          "description": {
+            "signal": "\"Population: \" + (format(datum[\"Population\"], \"\")) + \"; Growth Rate: \" + (format(datum[\"GrowthRate\"], \"\")) + \"; Country: \" + (isValid(datum[\"Country\"]) ? datum[\"Country\"] : \"\"+datum[\"Country\"]) + \"; Continent: \" + (isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"]) + \"; Capital: \" + (isValid(datum[\"Capital\"]) ? datum[\"Capital\"] : \"\"+datum[\"Capital\"]) + \"; GrowthRate: \" + (format(datum[\"GrowthRate\"], \",\")) + \"; Density: \" + (format(datum[\"Density\"], \",\"))"
+          },
+          "x": {"scale": "x", "field": "Population"},
+          "y": {"scale": "y", "field": "GrowthRate"},
+          "text": {
+            "signal": "isValid(datum[\"Country\"]) ? datum[\"Country\"] : \"\"+datum[\"Country\"]"
+          }
+        }
+      }
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "log",
+      "domain": [100, 10000000000],
+      "range": [0, {"signal": "width"}]
+    },
+    {
+      "name": "y",
+      "type": "log",
+      "domain": [0.98, 1.05],
+      "range": [{"signal": "height"}, 0]
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": [
+        "North America",
+        "South America",
+        "Europe",
+        "Africa",
+        "Asia",
+        "Oceania"
+      ],
+      "range": [
+        "#e41a1c",
+        "#984ea3",
+        "#ff7f00",
+        "#a6cee3",
+        "#377eb8",
+        "#a65628"
+      ]
+    },
+    {
+      "name": "size",
+      "type": "threshold",
+      "domain": [1, 50, 200, 500, 1000],
+      "range": [10, 100, 400, 800, 1500, 3000]
+    }
+  ],
+  "axes": [
+    {
+      "scale": "x",
+      "orient": "bottom",
+      "tickCount": 7,
+      "gridScale": "y",
+      "grid": true,
+      "domain": false,
+      "labels": false,
+      "aria": false,
+      "maxExtent": 0,
+      "minExtent": 0,
+      "ticks": false,
+      "zindex": 0
+    },
+    {
+      "scale": "y",
+      "orient": "left",
+      "tickCount": 6,
+      "gridScale": "x",
+      "grid": true,
+      "domain": false,
+      "labels": false,
+      "aria": false,
+      "maxExtent": 0,
+      "minExtent": 0,
+      "ticks": false,
+      "zindex": 0
+    },
+    {
+      "scale": "x",
+      "orient": "bottom",
+      "grid": false,
+      "title": "Population",
+      "tickCount": 7,
+      "labelFlush": true,
+      "labelOverlap": "greedy",
+      "zindex": 0
+    },
+    {
+      "scale": "y",
+      "orient": "left",
+      "grid": false,
+      "title": "Growth Rate",
+      "tickCount": 6,
+      "labelOverlap": "greedy",
+      "zindex": 0
+    }
+  ],
+  "legends": [
+    {
+      "fill": "color",
+      "symbolType": "circle",
+      "title": "Continent",
+      "encode": {"symbols": {"update": {"opacity": {"value": 0.6}}}}
+    },
+    {
+      "format": ".1s",
+      "size": "size",
+      "labelOverlap": "greedy",
+      "symbolType": "circle",
+      "title": "Density",
+      "encode": {
+        "symbols": {
+          "update": {
+            "fill": {"value": "black"},
+            "fillOpacity": {"value": 0.6},
+            "opacity": {"value": 0.6},
+            "stroke": {"value": "transparent"}
+          }
+        }
+      }
+    }
+  ],
+  "config": {}
+}
