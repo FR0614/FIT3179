@@ -1,0 +1,143 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1000,
+  "height": 800,
+  "title": "World Population And Growth Rate",
+  "data": {
+    "url": "https://raw.githubusercontent.com/FR0614/FIT3179/main/world_population%20-%20world_population%20(2).csv"
+  },
+  "params": [
+    {
+      "name": "Population_Above",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 0,
+        "max": 1500000000,
+        "step": 1000000,
+        "name": "Minimum Population: "
+      }
+    },
+    {
+      "name": "Continent_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"
+        ],
+        "labels": [
+          "Show All",
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"
+        ],
+        "name": "Continent Selection: "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.Population > 0"},
+    {"filter": "datum.Density > 0"},
+    {"filter": "datum.GrowthRate > 0.98"},
+    {"filter": "1.06>datum.GrowthRate"},
+    {"filter": "datum.Population > Population_Above"},
+    {
+      "filter": "Continent_selection == null || datum.Continent == Continent_selection"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Population",
+      "type": "quantitative",
+      "title": "Population",
+      "axis": {"tickCount": 7},
+      "scale": {"type": "log", "domain": [100, 10000000000]}
+    },
+    "y": {
+      "field": "GrowthRate",
+      "type": "quantitative",
+      "title": "Growth Rate",
+      "axis": {"tickCount": 6},
+      "scale": {"type": "log", "domain": [0.98, 1.05]}
+    }
+  },
+  "layer": [
+    {
+      "mark": "circle",
+      "encoding": {
+        "color": {
+          "field": "Continent",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "North America",
+              "South America",
+              "Europe",
+              "Africa",
+              "Asia",
+              "Oceania"
+            ],
+            "range": [
+              "#e41a1c",
+              "#984ea3",
+              "#ff7f00",
+              "#a6cee3",
+              "#377eb8",
+              "#a65628"
+            ]
+          }
+        },
+        "opacity": {"value": 0.6},
+        "size": {
+          "field": "Density",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [1, 50, 200, 500, 1000],
+            "range": [10, 100, 400, 800, 1500, 3000]
+          },
+          "legend": {"format": ".1s"}
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -12,
+        "fontSize": 12,
+        "fontStyle": "italic"
+      },
+      "encoding": {
+        "text": {"field": "Country", "type": "nominal"},
+        "color": {"value": "black"},
+        "opacity": {
+          "condition": {
+            "test": "datum['Country'] == 'China' || datum['Country'] =='India' || datum['Country'] == 'Australia' || datum['Country'] =='New Zealand' || datum['Country'] =='Monaco' ||  datum['Country'] == 'United States'|| datum['Country'] =='Lebanon'|| datum['Country'] =='Vatican City'|| datum['Country'] =='Poland' || datum['Country'] =='Russia'   ",
+            "value": 1
+          },
+          "value": 0
+        },
+        "tooltip": [
+          {"field": "Continent", "type": "nominal"},
+          {"field": "Country", "type": "nominal"},
+          {"field": "Capital", "type": "nominal"},
+          {"field": "Population", "type": "quantitative", "format": ","},
+          {"field": "GrowthRate", "type": "quantitative", "format": ","},
+          {"field": "Density", "type": "quantitative", "format": ","}
+        ]
+      }
+    }
+  ],
+  "config": {}
+}
