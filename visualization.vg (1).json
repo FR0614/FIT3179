@@ -11,14 +11,10 @@
   "data": [
     {
       "name": "source_1",
-      "url": "https://raw.githubusercontent.com/FR0614/FIT3179/main/world_population%20-%20world_population%20(2).csv",
+      "url": "https://raw.githubusercontent.com/FR0614/FIT3179/main/world_population%20-%20world_population%20(4).csv",
       "format": {"type": "csv", "delimiter": ","}
     },
-    {
-      "name": "source_2",
-      "url": "https://raw.githubusercontent.com/FR0614/FIT3179/main/ne_110m.json",
-      "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
-    },
+
     {
       "name": "source_0",
       "url": "https://raw.githubusercontent.com/FR0614/FIT3179/main/ne_110m.json",
@@ -90,36 +86,23 @@
         "update": {
           "fill": {"scale": "color", "field": "Population"},
           "tooltip": {
-            "signal": "{\"Country\": isValid(datum[\"properties.NAME\"]) ? datum[\"properties.NAME\"] : \"\"+datum[\"properties.NAME\"], \"Population\": format(datum[\"Population\"], \"\")}"
+            "signal": "{\"Country\": isValid(datum[\"properties.NAME\"]) ? datum[\"properties.NAME\"] : \"\"+datum[\"properties.NAME\"], \"Population by million\": format(datum[\"Population\"],',.2f')}"
           },
           "ariaRoleDescription": {"value": "geoshape"},
           "description": {
-            "signal": "\"Population: \" + (format(datum[\"Population\"], \"\")) + \"; Country: \" + (isValid(datum[\"properties.NAME\"]) ? datum[\"properties.NAME\"] : \"\"+datum[\"properties.NAME\"])"
+            "signal": "\"Population: \" + (format(datum[\"Population\"], \"\")) +\"; Country: \" + (isValid(datum[\"properties.NAME\"]) ? datum[\"properties.NAME\"] : \"\"+datum[\"properties.NAME\"])"
           }
         }
       },
       "transform": [{"type": "geoshape", "projection": "projection"}]
-    },
-    {
-      "name": "layer_2_marks",
-      "type": "shape",
-      "style": ["geoshape"],
-      "from": {"data": "source_2"},
-      "encode": {
-        "update": {
-          "fill": {"value": null},
-          "stroke": {"value": "lightgray"},
-          "ariaRoleDescription": {"value": "geoshape"}
-        }
-      },
-      "transform": [{"type": "geoshape", "projection": "projection"}]
     }
+  
   ],
   "scales": [
     {
       "name": "color",
       "type": "threshold",
-      "domain": [1, 10, 100],
+      "domain": [10, 50, 100],
       "range": ["#fdbe85", "#fd8d3c", "#e6550d", "#a63603"],
       "interpolate": "hcl"
     }
@@ -129,7 +112,7 @@
       "fill": "color",
       "labelOverlap": "greedy",
       "symbolType": "circle",
-      "title": "Population"
+      "title": "Population(million)"
     }
   ],
   "config": {}
