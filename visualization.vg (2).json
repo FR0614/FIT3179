@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "background": "white",
   "padding": 5,
-  "width": 700,
-  "height": 600,
+  "width": 600,
+  "height": 450,
   "title": {"text": "The Population, Growth Rate and Density by Country", "frame": "group"},
   "style": "cell",
   "data": [
@@ -174,8 +174,8 @@
     {
       "name": "size",
       "type": "threshold",
-      "domain": [50, 200, 500, 1000],
-      "range": [10, 100, 200, 400, 600]
+      "domain": [50, 300, 500,1000,10000],
+      "range": [10, 50, 150, 200, 300,400]
     }
   ],
   "axes": [
