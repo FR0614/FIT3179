@@ -3,13 +3,13 @@
   "background": "white",
   "padding": 5,
   "width": 700,
-  "height": 800,
-  "title": {"text": "World Population And Growth Rate", "frame": "group"},
+  "height": 600,
+  "title": {"text": "The Population, Growth Rate and Density by Country", "frame": "group"},
   "style": "cell",
   "data": [
     {
       "name": "source_0",
-      "url": "https://raw.githubusercontent.com/FR0614/FIT3179/main/world_population%20-%20world_population%20(2).csv",
+      "url": "https://raw.githubusercontent.com/FR0614/FIT3179/main/world_population%20-%20world_population%20(6).csv",
       "format": {"type": "csv", "delimiter": ","},
       "transform": [
         {"type": "filter", "expr": "datum.Population > 0"},
@@ -94,7 +94,7 @@
           "fill": {"scale": "color", "field": "Continent"},
           "ariaRoleDescription": {"value": "circle"},
           "description": {
-            "signal": "\"Population: \" + (format(datum[\"Population\"], \"\")) + \"; Growth Rate: \" + (format(datum[\"GrowthRate\"], \"\")) + \"; Continent: \" + (isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"]) + \"; Density: \" + (format(datum[\"Density\"], \".1s\"))"
+            "signal": "\"Population: \" + (format(datum[\"Population\"], \"\")) + \"; Growth Rate(%): \" + (format(datum[\"GrowthRate\"], \"\")) + \"; Continent: \" + (isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"]) + \"; Density: \" + (format(datum[\"Density\"], \".1s\"))"
           },
           "x": {"scale": "x", "field": "Population"},
           "y": {"scale": "y", "field": "GrowthRate"},
@@ -118,16 +118,16 @@
           "fill": {"value": "black"},
           "opacity": [
             {
-              "test": "datum['Country'] == 'China' || datum['Country'] =='India' || datum['Country'] == 'Australia' || datum['Country'] =='New Zealand' || datum['Country'] =='Monaco' ||  datum['Country'] == 'United States'|| datum['Country'] =='Lebanon'|| datum['Country'] =='Vatican City'|| datum['Country'] =='Poland' || datum['Country'] =='Russia'   ",
+              "test": "datum['Country'] == 'Macau' || datum['Country'] =='Monaco' || datum['Country'] == 'Singapore' || datum['Country'] =='Hong Kong' || datum['Country'] =='Gibraltar' ",
               "value": 1
             },
             {"value": 0}
           ],
           "tooltip": {
-            "signal": "{\"Continent\": isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"], \"Country\": isValid(datum[\"Country\"]) ? datum[\"Country\"] : \"\"+datum[\"Country\"], \"Capital\": isValid(datum[\"Capital\"]) ? datum[\"Capital\"] : \"\"+datum[\"Capital\"], \"Population\": format(datum[\"Population\"], \",\"), \"GrowthRate\": format(datum[\"GrowthRate\"], \",\"), \"Density\": format(datum[\"Density\"], \",\")}"
+            "signal": "{\"Continent\": isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"], \"Country\": isValid(datum[\"Country\"]) ? datum[\"Country\"] : \"\"+datum[\"Country\"], \"Capital\": isValid(datum[\"Capital\"]) ? datum[\"Capital\"] : \"\"+datum[\"Capital\"], \"Population\": format(datum[\"Population\"], \",\"), \"Growth Rate(%)\": format(datum[\"GrowthRate\"],',.2f', \",\"), \"Density (per km²)\": format(datum[\"Density\"],',.2f', \",\")}"
           },
           "description": {
-            "signal": "\"Population: \" + (format(datum[\"Population\"], \"\")) + \"; Growth Rate: \" + (format(datum[\"GrowthRate\"], \"\")) + \"; Country: \" + (isValid(datum[\"Country\"]) ? datum[\"Country\"] : \"\"+datum[\"Country\"]) + \"; Continent: \" + (isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"]) + \"; Capital: \" + (isValid(datum[\"Capital\"]) ? datum[\"Capital\"] : \"\"+datum[\"Capital\"]) + \"; GrowthRate: \" + (format(datum[\"GrowthRate\"], \",\")) + \"; Density: \" + (format(datum[\"Density\"], \",\"))"
+            "signal": "\"Population: \" + (format(datum[\"Population\"], \"\")) + \"; Growth Rate(%): \" + (format(datum[\"GrowthRate\"], \"\")) + \"; Country: \" + (isValid(datum[\"Country\"]) ? datum[\"Country\"] : \"\"+datum[\"Country\"]) + \"; Continent: \" + (isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"]) + \"; Capital: \" + (isValid(datum[\"Capital\"]) ? datum[\"Capital\"] : \"\"+datum[\"Capital\"]) + \"; GrowthRate: \" + (format(datum[\"GrowthRate\"], \",\")) + \"; Density: \" + (format(datum[\"Density\"], \",\"))"
           },
           "x": {"scale": "x", "field": "Population"},
           "y": {"scale": "y", "field": "GrowthRate"},
@@ -174,8 +174,8 @@
     {
       "name": "size",
       "type": "threshold",
-      "domain": [1, 50, 200, 500, 1000],
-      "range": [10, 100, 400, 800, 1500, 3000]
+      "domain": [50, 200, 500, 1000],
+      "range": [10, 100, 200, 400, 600]
     }
   ],
   "axes": [
@@ -239,7 +239,7 @@
       "size": "size",
       "labelOverlap": "greedy",
       "symbolType": "circle",
-      "title": "Density",
+      "title": "population Density (per km²)",
       "encode": {
         "symbols": {
           "update": {
