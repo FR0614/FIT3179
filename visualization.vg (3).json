@@ -1,0 +1,165 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "background": "white",
+  "padding": 5,
+  "width": 600,
+  "height": 450,
+  "title": {
+    "text": "The Population life expectancy and Social Support by Region",
+    "frame": "group"
+  },
+  "style": "cell",
+  "data": [
+    {
+      "name": "source_0",
+      "url": "https://raw.githubusercontent.com/FR0614/FIT3179/main/world-happiness-report-2021.csv",
+      "format": {"type": "csv", "delimiter": ","},
+      "transform": [
+        {
+          "type": "extent",
+          "field": "SocialSupport",
+          "signal": "bin_maxbins_60_SocialSupport_extent"
+        },
+        {
+          "type": "bin",
+          "field": "SocialSupport",
+          "as": [
+            "bin_maxbins_60_SocialSupport",
+            "bin_maxbins_60_SocialSupport_end"
+          ],
+          "signal": "bin_maxbins_60_SocialSupport_bins",
+          "extent": {"signal": "bin_maxbins_60_SocialSupport_extent"},
+          "maxbins": 60
+        },
+        {
+          "type": "extent",
+          "field": "HealthyLifeExpectancy",
+          "signal": "bin_maxbins_40_HealthyLifeExpectancy_extent"
+        },
+        {
+          "type": "bin",
+          "field": "HealthyLifeExpectancy",
+          "as": [
+            "bin_maxbins_40_HealthyLifeExpectancy",
+            "bin_maxbins_40_HealthyLifeExpectancy_end"
+          ],
+          "signal": "bin_maxbins_40_HealthyLifeExpectancy_bins",
+          "extent": {"signal": "bin_maxbins_40_HealthyLifeExpectancy_extent"},
+          "maxbins": 40
+        },
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"bin_maxbins_60_SocialSupport\"]) && isFinite(+datum[\"bin_maxbins_60_SocialSupport\"]) && isValid(datum[\"bin_maxbins_40_HealthyLifeExpectancy\"]) && isFinite(+datum[\"bin_maxbins_40_HealthyLifeExpectancy\"])"
+        }
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "name": "marks",
+      "type": "symbol",
+      "style": ["square"],
+      "from": {"data": "source_0"},
+      "encode": {
+        "update": {
+          "opacity": {"value": 0.7},
+          "tooltip": {
+            "signal": "{\"Social Support (0~1)\": !isValid(datum[\"bin_maxbins_60_SocialSupport\"]) || !isFinite(+datum[\"bin_maxbins_60_SocialSupport\"]) ? \"null\" : format(datum[\"bin_maxbins_60_SocialSupport\"], \"\") + \" – \" + format(datum[\"bin_maxbins_60_SocialSupport_end\"], \"\"), \"Life Expectancy (years)\": !isValid(datum[\"bin_maxbins_40_HealthyLifeExpectancy\"]) || !isFinite(+datum[\"bin_maxbins_40_HealthyLifeExpectancy\"]) ? \"null\" : format(datum[\"bin_maxbins_40_HealthyLifeExpectancy\"], \"\") + \" – \" + format(datum[\"bin_maxbins_40_HealthyLifeExpectancy_end\"], \"\"), \"Region\": isValid(datum[\"RegionalIndicator\"]) ? datum[\"RegionalIndicator\"] : \"\"+datum[\"RegionalIndicator\"]}"
+          },
+          "fill": {"scale": "color", "field": "RegionalIndicator"},
+          "ariaRoleDescription": {"value": "square"},
+          "description": {
+            "signal": "\"Social Support (0~1): \" + (!isValid(datum[\"bin_maxbins_60_SocialSupport\"]) || !isFinite(+datum[\"bin_maxbins_60_SocialSupport\"]) ? \"null\" : format(datum[\"bin_maxbins_60_SocialSupport\"], \"\") + \" – \" + format(datum[\"bin_maxbins_60_SocialSupport_end\"], \"\")) + \"; Life Expectancy (years): \" + (!isValid(datum[\"bin_maxbins_40_HealthyLifeExpectancy\"]) || !isFinite(+datum[\"bin_maxbins_40_HealthyLifeExpectancy\"]) ? \"null\" : format(datum[\"bin_maxbins_40_HealthyLifeExpectancy\"], \"\") + \" – \" + format(datum[\"bin_maxbins_40_HealthyLifeExpectancy_end\"], \"\")) + \"; Region: \" + (isValid(datum[\"RegionalIndicator\"]) ? datum[\"RegionalIndicator\"] : \"\"+datum[\"RegionalIndicator\"])"
+          },
+          "x": {
+            "signal": "scale(\"x\", 0.5 * datum[\"bin_maxbins_60_SocialSupport\"] + 0.5 * datum[\"bin_maxbins_60_SocialSupport_end\"])"
+          },
+          "y": {
+            "signal": "scale(\"y\", 0.5 * datum[\"bin_maxbins_40_HealthyLifeExpectancy\"] + 0.5 * datum[\"bin_maxbins_40_HealthyLifeExpectancy_end\"])"
+          },
+          "shape": {"value": "square"}
+        }
+      }
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "linear",
+      "domain": {
+        "signal": "[bin_maxbins_60_SocialSupport_bins.start, bin_maxbins_60_SocialSupport_bins.stop]"
+      },
+      "range": [0, {"signal": "width"}],
+      "bins": {"signal": "bin_maxbins_60_SocialSupport_bins"},
+      "zero": false
+    },
+    {
+      "name": "y",
+      "type": "linear",
+      "domain": {
+        "signal": "[bin_maxbins_40_HealthyLifeExpectancy_bins.start, bin_maxbins_40_HealthyLifeExpectancy_bins.stop]"
+      },
+      "range": [{"signal": "height"}, 0],
+      "bins": {"signal": "bin_maxbins_40_HealthyLifeExpectancy_bins"},
+      "zero": false
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": [
+        "Western Europe",
+        "North America and ANZ",
+        "Middle East and North Africa",
+        "Latin America and Caribbean",
+        "Central and Eastern Europe",
+        "East Asia",
+        "Southeast Asia",
+        "Commonwealth of Independent States",
+        "South Asia",
+        "Sub-Saharan Africa"
+      ],
+      "range": [
+        "#aec7e8",
+        "#c7c7c7",
+        "#1f77b4",
+        "#9467bd",
+        "#e7ba52",
+        "#00FFFF",
+        "#00A36C",
+        "#4CBB17",
+        "#808000",
+        "#FFEA00"
+      ]
+    }
+  ],
+  "axes": [
+    {
+      "scale": "x",
+      "orient": "bottom",
+      "grid": false,
+      "title": "Social Support (0~1)",
+      "labelFlush": true,
+      "labelOverlap": true,
+      "tickCount": {"signal": "ceil(width/10)"},
+      "zindex": 0
+    },
+    {
+      "scale": "y",
+      "orient": "left",
+      "grid": false,
+      "title": "Life Expectancy (years)",
+      "labelOverlap": true,
+      "tickCount": {"signal": "ceil(height/10)"},
+      "zindex": 0
+    }
+  ],
+  "legends": [
+    {
+      "title": "Region",
+      "fill": "color",
+      "symbolType": "square",
+      "encode": {"symbols": {"update": {"opacity": {"value": 0.7}}}}
+    }
+  ],
+  "config": {}
+}
