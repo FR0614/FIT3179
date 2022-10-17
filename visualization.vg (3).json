@@ -3,7 +3,7 @@
   "background": "white",
   "padding": 5,
   "width": 600,
-  "height": 450,
+  "height": 300,
   "title": {
     "text": "The Population life expectancy and Social Support by Region",
     "frame": "group"
