@@ -221,7 +221,7 @@
       "scale": "y",
       "orient": "left",
       "grid": false,
-      "title": "Growth Rate",
+      "title": "Growth Rate (%)",
       "tickCount": 6,
       "labelOverlap": "greedy",
       "zindex": 0
@@ -239,7 +239,7 @@
       "size": "size",
       "labelOverlap": "greedy",
       "symbolType": "circle",
-      "title": "population Density (per km²)",
+      "title": "population Density (p/km²)",
       "encode": {
         "symbols": {
           "update": {
