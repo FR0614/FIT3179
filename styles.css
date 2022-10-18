@@ -6,10 +6,12 @@ h1 {
     font-weight: 900;
     font-family: 'Fantacy', Papyrus;
     color: #6082B6;
+    border-style:solid;
 }
 
 h2 {
     color: #7393B3;
+    border-style:dashed;
 }
 
 body {
