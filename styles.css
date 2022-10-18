@@ -17,7 +17,7 @@ body {
     background-color: white;
     margin: auto;
     padding: 80px;
-    padding-top: 35px;
+    padding-top: 80px;
 }
 
 .vis-container {
@@ -35,10 +35,7 @@ h1 {
     margin-bottom: 25px;
 }
 
-.pure-g2 {
-    margin-bottom: 5px;
-}
 
 .small-font {
-    font-size: 16px;
+    font-size: 15px;
 }
