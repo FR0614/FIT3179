@@ -86,7 +86,7 @@
         "update": {
           "fill": {"scale": "color", "field": "Population"},
           "tooltip": {
-            "signal": "{\"Country\": isValid(datum[\"properties.NAME\"]) ? datum[\"properties.NAME\"] : \"\"+datum[\"properties.NAME\"], \"Population by million\": format(datum[\"Population\"],',.2f')}"
+            "signal": "{\"Country\": isValid(datum[\"properties.NAME\"]) ? datum[\"properties.NAME\"] : \"\"+datum[\"properties.NAME\"], \"Population(million)\": format(datum[\"Population\"],',.2f')}"
           },
           "ariaRoleDescription": {"value": "geoshape"},
           "description": {
