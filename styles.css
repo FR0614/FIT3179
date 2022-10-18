@@ -6,7 +6,8 @@ h1 {
     font-weight: 900;
     font-family: 'Fantacy', Papyrus;
     color: #6F8FAF;
-    border-style:solid;
+    margin: 0 auto; text-align: center
+
 }
 
 h2 {
