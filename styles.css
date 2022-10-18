@@ -21,7 +21,7 @@ body {
 }
 
 .vis-container {
-    margin: 0 auto; text-align: center;
+    
     width: 100%;
 }
 
@@ -40,5 +40,5 @@ h1 {
 }
 
 .small-font {
-    font-size: 14px;
+    font-size: 16px;
 }
