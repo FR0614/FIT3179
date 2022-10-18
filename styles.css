@@ -25,15 +25,15 @@ body {
     width: 100%;
 }
 
-.description h2,
-h1 {
+.description h2
+{
     margin-top: 0px;
     color: #8B4513;
 }
 
 
 .pure-g {
-    margin-bottom: 25px;
+    margin-bottom: 40px;
 }
 
 
