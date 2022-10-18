@@ -29,7 +29,7 @@ body {
 }
 
 .vis-container {
-    width: 100%;
+     margin: auto;
 }
 
 .description h2,
