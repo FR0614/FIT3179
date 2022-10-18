@@ -5,7 +5,11 @@ body *{
 h1 {
     font-weight: 900;
     font-family: 'Fantacy', Papyrus;
-    color: #722F37;
+    color: #6082B6;
+}
+
+h2 {
+    color: #7393B3;
 }
 
 body {
