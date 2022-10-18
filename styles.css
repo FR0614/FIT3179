@@ -8,6 +8,13 @@ h1 {
     color: #722F37;
 }
 
+h2
+{
+    margin-top: 0px;
+    color: #8B4513;
+}
+
+
 body {
     background-color: gray;
 }
@@ -24,13 +31,6 @@ body {
     
     width: 100%;
 }
-
-.description h2
-{
-    margin-top: 0px;
-    color: #8B4513;
-}
-
 
 .pure-g {
     margin-bottom: 40px;
