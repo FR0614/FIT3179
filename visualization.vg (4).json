@@ -4,7 +4,7 @@
 
   "data": {"url": "https://raw.githubusercontent.com/FR0614/FIT3179/main/population_by_country_2020.csv"},
   "vconcat": [{
-    "width": "container",
+    "width": 600,
         "height": 300,
     "mark": "bar",
     "encoding": {
@@ -20,7 +20,7 @@
     ]
     }
   }, {
-    "width": "container",
+    "width": 600,
     "height": 200,
     "mark": "line",
     "params": [{
