@@ -3,7 +3,7 @@
   "background": "#F0FFFF",
   "padding": 5,
   "width": 600,
-  "height": 450,
+  "height": 300,
   "title": {
     "text": "World Population Distribution 2022",
     "frame": "group"
