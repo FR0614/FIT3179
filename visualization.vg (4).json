@@ -21,7 +21,7 @@
     }
   }, {
     "width": 600,
-    "height": 200,
+    "height": 100,
     "mark": "line",
     "params": [{
       "name": "brush",
