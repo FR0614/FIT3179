@@ -11,7 +11,7 @@
       "x": {
         "field": "MedAge",
         "scale": {"domain": {"param": "brush"}},
-        "axis": {"title": ""}
+        "axis": {"title": "Age"}
       },
     "y": {"aggregate":"sum","field": "Population", "axis": {"grid": false},"title":"Population of all countries with the same average age"},
      "tooltip": [
